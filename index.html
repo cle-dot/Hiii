@@ -39,6 +39,7 @@ img{
     width:150px;
     border-radius:15px;
     margin:10px;
+    cursor:pointer;
 }
 
 .hidden{
@@ -68,29 +69,30 @@ img{
 <img src="https://media.tenor.com/OmU5vtbO8YsAAAAi/happy-excited.gif">
 <p>What time are you available?</p>
 
-<p>What time are you available? ⏰</p>
-
+<div id="timeButtons">
 <button onclick="selectTime('12:00 PM')">12:00 PM</button>
 <button onclick="selectTime('1:00 PM')">1:00 PM</button>
 <button onclick="selectTime('2:00 PM')">2:00 PM</button>
 <button onclick="selectTime('3:00 PM')">3:00 PM</button>
 <button onclick="selectTime('4:00 PM')">4:00 PM</button>
 <button onclick="selectTime('5:00 PM')">5:00 PM</button>
+</div>
+
 <br>
-<button onclick="goToFood()">Next 💗</button>
+<button id="nextFoodBtn" class="hidden" onclick="goToFood()">Next 💗</button>
 </div>
 
 <!-- FOOD -->
 <div id="foodPage" class="hidden">
 <h3>What do you want to eat? 🍓</h3>
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/McDonald%27s_square_2020.svg/330px-McDonald%27s_square_2020.svg.png" onclick="selectFood('Mcdonalds')">
-<img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/84/Jollibee_2011_logo.svg/500px-Jollibee_2011_logo.svg.png" onclick="selectFood('Jollibee in ampayon')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/McDonald%27s_square_2020.svg/330px-McDonald%27s_square_2020.svg.png" onclick="selectFood('McDonalds')">
+<img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/84/Jollibee_2011_logo.svg/500px-Jollibee_2011_logo.svg.png" onclick="selectFood('Jollibee in Ampayon')">
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Mang_Inasal.svg/960px-Mang_Inasal.svg.png" onclick="selectFood('Mang Inasal')">
 <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/63/SM_Supermalls_logo_2022.svg/500px-SM_Supermalls_logo_2022.svg.png" onclick="selectFood('Somewhere in SM malls')">
 
 <br>
-<button onclick="goToActivity()">Next 💕</button>
+<button id="nextActivityBtn" class="hidden" onclick="goToActivity()">Next 💕</button>
 </div>
 
 <!-- ACTIVITY -->
@@ -99,11 +101,11 @@ img{
 
 <img src="https://open-stand.org/wp-content/uploads/2016/04/International-Union-of-Cinemas-Calls-for-Open-Standards-in-the-Cinema-Industry.jpg" onclick="selectActivity('Cinema')">
 <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/30/26/3b/36/so-many-classics.jpg" onclick="selectActivity('Arcade')">
-<img src="https://shop.dynomakes.com/cdn/shop/files/ph-11134207-7ras8-m782199y1gmj88.jpg" onclick="selectActivity('Help u with ur fuzzy if not finished')">
+<img src="https://shop.dynomakes.com/cdn/shop/files/ph-11134207-7ras8-m782199y1gmj88.jpg" onclick="selectActivity('Help u with fuzzy')">
 <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/63/SM_Supermalls_logo_2022.svg/500px-SM_Supermalls_logo_2022.svg.png" onclick="selectActivity('Something in SM mall')">
 
 <br>
-<button onclick="finalPage()">Confirm 💖</button>
+<button id="finalBtn" class="hidden" onclick="finalPage()">Confirm 💖</button>
 </div>
 
 <!-- FINAL -->
@@ -119,6 +121,7 @@ img{
 let noCount = 0;
 let chosenFood = "";
 let chosenActivity = "";
+let chosenTime = "";
 
 function yesClicked(){
     document.getElementById("firstPage").classList.add("hidden");
@@ -137,13 +140,28 @@ function noClicked(){
     }
 }
 
+// TIME SELECTION
+function selectTime(time){
+    chosenTime = time;
+    document.getElementById("nextFoodBtn").classList.remove("hidden");
+}
+
+// FOOD SELECTION
+function selectFood(food){
+    chosenFood = food;
+    document.getElementById("nextActivityBtn").classList.remove("hidden");
+}
+
+// ACTIVITY SELECTION
+function selectActivity(activity){
+    chosenActivity = activity;
+    document.getElementById("finalBtn").classList.remove("hidden");
+}
+
+// PAGE NAVIGATION
 function goToFood(){
     document.getElementById("yesPage").classList.add("hidden");
     document.getElementById("foodPage").classList.remove("hidden");
-}
-
-function selectFood(food){
-    chosenFood = food;
 }
 
 function goToActivity(){
@@ -151,21 +169,24 @@ function goToActivity(){
     document.getElementById("activityPage").classList.remove("hidden");
 }
 
-function selectActivity(activity){
-    chosenActivity = activity;
-}
-
 function finalPage(){
-    let time = document.getElementById("timeInput").value;
     document.getElementById("activityPage").classList.add("hidden");
     document.getElementById("finalPage").classList.remove("hidden");
 
     document.getElementById("finalResult").innerHTML =
-    "See you at " + time + " 💕<br>" +
+    "See you at " + chosenTime + " 💕<br>" +
     "We will eat " + chosenFood + "<br>" +
     "Then we will " + chosenActivity + " 💞";
+
+    // NOTIFY you of her results
+    console.log("HER CHOICES:");
+    console.log("Time: " + chosenTime);
+    console.log("Food: " + chosenFood);
+    console.log("Activity: " + chosenActivity);
+    alert("Choices saved! Check console for details."); // optional
 }
 </script>
 
 </body>
 </html>
+
