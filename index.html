@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For You 💖</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    text-align:center;
+    background: linear-gradient(to right,#ff9ecf,#ffcce6);
+    padding:20px;
+}
+
+.container{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    max-width:400px;
+    margin:auto;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+button{
+    padding:10px;
+    margin:5px;
+    border:none;
+    border-radius:15px;
+    background:#ff4d94;
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#e60073;
+}
+
+img{
+    width:150px;
+    border-radius:15px;
+    margin:10px;
+}
+
+.hidden{
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- FIRST PAGE -->
+<div id="firstPage">
+<h2 id="question">Hi Hazel 💕<br>Will you go out with me tomorrow?</h2>
+
+<img src="https://i.pinimg.com/736x/55/29/24/552924c5d913f43785c58e07371f8e53.jpg">
+
+<br>
+<button id="yesBtn" onclick="yesClicked()">YES 💖</button>
+<button onclick="noClicked()">No 😢</button>
+</div>
+
+<!-- AFTER YES -->
+<div id="yesPage" class="hidden">
+<h2>Yayyyy 💞</h2>
+<img src="https://media.tenor.com/OmU5vtbO8YsAAAAi/happy-excited.gif">
+<p>What time are you available?</p>
+
+<p>What time are you available? ⏰</p>
+
+<button onclick="selectTime('12:00 PM')">12:00 PM</button>
+<button onclick="selectTime('1:00 PM')">1:00 PM</button>
+<button onclick="selectTime('2:00 PM')">2:00 PM</button>
+<button onclick="selectTime('3:00 PM')">3:00 PM</button>
+<button onclick="selectTime('4:00 PM')">4:00 PM</button>
+<button onclick="selectTime('5:00 PM')">5:00 PM</button>
+<br>
+<button onclick="goToFood()">Next 💗</button>
+</div>
+
+<!-- FOOD -->
+<div id="foodPage" class="hidden">
+<h3>What do you want to eat? 🍓</h3>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/McDonald%27s_square_2020.svg/330px-McDonald%27s_square_2020.svg.png" onclick="selectFood('Mcdonalds')">
+<img src="https://upload.wikimedia.org/wikipedia/en/thumb/8/84/Jollibee_2011_logo.svg/500px-Jollibee_2011_logo.svg.png" onclick="selectFood('Jollibee in ampayon')">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Mang_Inasal.svg/960px-Mang_Inasal.svg.png" onclick="selectFood('Mang Inasal')">
+<img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/63/SM_Supermalls_logo_2022.svg/500px-SM_Supermalls_logo_2022.svg.png" onclick="selectFood('Somewhere in SM malls')">
+
+<br>
+<button onclick="goToActivity()">Next 💕</button>
+</div>
+
+<!-- ACTIVITY -->
+<div id="activityPage" class="hidden">
+<h3>What do you want to do? 🎀</h3>
+
+<img src="https://open-stand.org/wp-content/uploads/2016/04/International-Union-of-Cinemas-Calls-for-Open-Standards-in-the-Cinema-Industry.jpg" onclick="selectActivity('Cinema')">
+<img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/30/26/3b/36/so-many-classics.jpg" onclick="selectActivity('Arcade')">
+<img src="https://shop.dynomakes.com/cdn/shop/files/ph-11134207-7ras8-m782199y1gmj88.jpg" onclick="selectActivity('Help u with ur fuzzy if not finished')">
+<img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/63/SM_Supermalls_logo_2022.svg/500px-SM_Supermalls_logo_2022.svg.png" onclick="selectActivity('Something in SM mall')">
+
+<br>
+<button onclick="finalPage()">Confirm 💖</button>
+</div>
+
+<!-- FINAL -->
+<div id="finalPage" class="hidden">
+<h2>Our Date Plan 💕</h2>
+<p id="finalResult"></p>
+<img src="https://media.tenor.com/906nGAL7Xw0AAAAi/mochi-peachcat-cute-cat.gif">
+</div>
+
+</div>
+
+<script>
+let noCount = 0;
+let chosenFood = "";
+let chosenActivity = "";
+
+function yesClicked(){
+    document.getElementById("firstPage").classList.add("hidden");
+    document.getElementById("yesPage").classList.remove("hidden");
+}
+
+function noClicked(){
+    noCount++;
+    let yesBtn = document.getElementById("yesBtn");
+    yesBtn.style.transform = "scale(" + (1 + noCount*0.5) + ")";
+    
+    if(noCount >= 5){
+        document.getElementById("question").innerHTML = "That hurts 😭 but I still like you...";
+        document.getElementById("firstPage").innerHTML += 
+        "<br><img src='https://media.giphy.com/media/ROF8OQvDmxytW/giphy.gif'>";
+    }
+}
+
+function goToFood(){
+    document.getElementById("yesPage").classList.add("hidden");
+    document.getElementById("foodPage").classList.remove("hidden");
+}
+
+function selectFood(food){
+    chosenFood = food;
+}
+
+function goToActivity(){
+    document.getElementById("foodPage").classList.add("hidden");
+    document.getElementById("activityPage").classList.remove("hidden");
+}
+
+function selectActivity(activity){
+    chosenActivity = activity;
+}
+
+function finalPage(){
+    let time = document.getElementById("timeInput").value;
+    document.getElementById("activityPage").classList.add("hidden");
+    document.getElementById("finalPage").classList.remove("hidden");
+
+    document.getElementById("finalResult").innerHTML =
+    "See you at " + time + " 💕<br>" +
+    "We will eat " + chosenFood + "<br>" +
+    "Then we will " + chosenActivity + " 💞";
+}
+</script>
+
+</body>
+</html>
